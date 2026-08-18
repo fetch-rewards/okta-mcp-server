@@ -173,4 +173,9 @@ TOOL_SCOPE_REGISTRY: dict[str, str] = {
     "replace_email_domain":                 "okta.emailDomains.manage",
     "delete_email_domain":                  "okta.emailDomains.manage",
     "verify_email_domain":                  "okta.emailDomains.manage",
+    # ------------------------------------------------------------------
+    # Devices  (src/okta_mcp_server/tools/devices/devices.py)
+    # ------------------------------------------------------------------
+    "list_devices":                         "okta.devices.read",
+    "get_device":                           "okta.devices.read",
 }
