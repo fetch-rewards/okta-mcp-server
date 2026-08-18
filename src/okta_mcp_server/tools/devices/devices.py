@@ -136,15 +136,18 @@ async def list_devices(
             result = create_paginated_response(
                 all_devices, response, fetch_all_used=True, pagination_info=pagination_info
             )
+            warnings = []
             if limit_clamped:
-                result["warning"] = limit_clamped
+                warnings.append(limit_clamped)
             if pagination_info.get("stopped_early"):
-                result["warning"] = (
+                warnings.append(
                     f"CRITICAL: fetch_all stopped early after {pagination_info['pages_fetched']} pages "
                     f"({result['total_fetched']} devices). The org almost certainly has MORE devices. "
                     f"Reason: {pagination_info.get('stop_reason')}. "
                     "You MUST tell the user the count found is a lower bound, not the exact total."
                 )
+            if warnings:
+                result["warning"] = warnings if len(warnings) > 1 else warnings[0]
             return result
         else:
             logger.info(f"Successfully retrieved {len(device_items)} devices")
